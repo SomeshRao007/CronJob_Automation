@@ -1,0 +1,4 @@
+#!/bin/sh
+
+chmod 755 /var/task/hello.php
+/var/task/php -f /var/task/hello.php
