@@ -23,23 +23,25 @@
 
 
 
-# EventBridge Rule
-resource "aws_cloudwatch_event_rule" "example" {
-  name                = "my-lambda-cron-trigger"
-  schedule_expression = "cron(0/2 * * * ? *)" # Replace with your desired cron expression 
+# Rule
+resource "aws_cloudwatch_event_rule" "phpCronR" {
+  name                = var.CloudwatcheventruleName
+  schedule_expression = var.cronjobExpression # your desired cron job time
+  # schedule_expression = "rate(5 minutes)"
 }
 
-# EventBridge Target to trigger Lambda
-resource "aws_cloudwatch_event_target" "example" {
-  rule = aws_cloudwatch_event_rule.example.name
-  arn  = aws_lambda_function.example.arn
+# to trigger Lambda
+resource "aws_cloudwatch_event_target" "phpCronT" {
+  rule = aws_cloudwatch_event_rule.phpCronR.name
+  arn  = var.target_arn
 }
 
-# Allow EventBridge to invoke Lambda
+# to invoke Lambda
 resource "aws_lambda_permission" "allow_cloudwatch_to_call_check_desync" {
+  # count         = var.deploy_to_account == "True" ? 1 : 0 
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.example.function_name
+  function_name = var.target_function_name
   principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.example.arn
+  source_arn    = aws_cloudwatch_event_rule.phpCronR.arn
 }

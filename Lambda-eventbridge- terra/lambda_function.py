@@ -13,15 +13,18 @@ from datetime import datetime
 #         ]}
 #     )
 
+#### To check
+# execution_id = datetime.now().strftime("%Y%m%d%H%M%S") 
+# php_command = f'echo "Execution {execution_id}" >> /tmp/testlogs/cronlogs.txt && /usr/bin/php -q /srv/1851-yii/console/yii scheduled-articles/index >> /tmp/testlogs/cronlogs.txt 2>&1'
+
+php_cron_command = '/usr/bin/php -q /srv/1851-yii/console/yii google-analytics4/location >> /tmp/testlogs/cronlogs.logs 2>&1'
+
 def lambda_handler(event, context):
     ssm_client = boto3.client('ssm')
     response = ssm_client.send_command(
-        InstanceIds=['i-027cc25a67fe8411a'],
+        InstanceIds=['i-02d12df6a406cb28c'],
         DocumentName="AWS-RunShellScript",
-        Parameters={'commands': [
-            'cd /home/ec2-user/hello/',
-            './cron-job.sh'
-        ]}
+        Parameters={'commands': [php_cron_command]}
     )
 
     def convert_datetime_to_string(obj):
