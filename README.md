@@ -7,9 +7,6 @@
 The diagram shows the journey from code development to deployment and monitoring in a cloud environment. It starts with developers pushing code to GitHub, which triggers an automated CI/CD process, and ends with the application running on AWS infrastructure with logging and monitoring in place.
 
 
-**[Loom Video](https://www.loom.com/share/d917b1df4ee64543ae1c51f73a2c5b43?sid=61e6f489-b448-4bfd-a4a8-14204f77a540)** 
-
-
 
 ### Development Pipeline:
 
