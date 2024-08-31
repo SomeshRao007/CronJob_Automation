@@ -1,4 +1,4 @@
-# PHP-legacy-Cron
+# CronJob_Automation
 
 The Terraform code sets up an automated process on AWS. It first creates a Lambda function using the code from lambda_function.py, granting it permission to execute commands using AWS Systems Manager (SSM). Then, it configures an EventBridge rule to trigger this Lambda function on a schedule defined by a cron expression. This way, your Lambda function's code will be executed automatically at the specified times. In essence, it automates a task to run on your AWS resources on your desired schedule.
 
