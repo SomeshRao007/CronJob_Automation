@@ -160,3 +160,59 @@ to delete all the resopurces every thing:
 ~~~
 terraform destroy --auto-approve
 ~~~
+
+### Github action 
+
+~~~
+name: Development
+
+on:
+  push:
+    branches: main
+  workflow_dispatch:
+env:
+  TERRAFORM_VERSION: '1.9.4'
+  
+jobs:
+  Cron_Terraform:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2     
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+        aws-region: us-east-1 
+
+    - name: Copy Lambda function and cron jobs files
+      run: |
+        mkdir -p Terraform/CornJobs/Lambda-eventbridge/1851_Backend_legacy_Lambda_Multi/temp
+        cp Terraform/CornJobs/Lambda-eventbridge/1851_Backend_legacy_Lambda_Multi/lambda_function.py Terraform/CornJobs/Lambda-eventbridge/1851_Backend_legacy_Lambda_Multi/temp/
+        cp Terraform/CornJobs/Lambda-eventbridge/1851_Backend_legacy_Lambda_Multi/corn_jobs.json Terraform/CornJobs/Lambda-eventbridge/1851_Backend_legacy_Lambda_Multi/temp/
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: ${{ env.TERRAFORM_VERSION }}
+
+    - name: Initialize Terraform
+      run: terraform init -backend-config=backend.config
+      working-directory: Terraform/CornJobs/Lambda-eventbridge
+
+    - name: Validate Terraform configuration
+      run: terraform validate
+      working-directory: Terraform/CornJobs/Lambda-eventbridge
+
+    - name: Plan Terraform changes
+      run: terraform plan -var-file=terraform-dev.tfvars -out=tfplan
+      working-directory: Terraform/CornJobs/Lambda-eventbridge
+
+    - name: Apply Terraform changes
+      run: terraform apply -auto-approve -parallelism=10 tfplan
+      working-directory: Terraform/CornJobs/Lambda-eventbridge
+~~~
+
