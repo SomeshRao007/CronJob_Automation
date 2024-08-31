@@ -1,0 +1,42 @@
+ubuntu@ip-172-31-73-29:/etc/fluent-bit$ ls
+fluent-bit.conf  parsers.conf  plugins.conf
+ubuntu@ip-172-31-73-29:/etc/fluent-bit$ sudo vi parsers.conf
+
+
+parsers.conf ---->
+
+[PARSER]
+    Name        cron_log_parser
+    Format      regex
+    Regex       ^(?<timestamp>\w{3} \d{2} \d{2}:\d{2}:\d{2}) (?<host>[^\s]+) CRON\[(?<pid>\d+)\]: \((?<user>[^\)]+)\) CMD \((?<command>.*)\)$
+    Time_Key    timestamp
+    Time_Format %b %d %H:%M:%S
+    Time_Keep   On
+
+[PARSER]
+    Name        error_log_parser
+    Format      regex
+    Regex       ^(?<level>\w+) - (?<start_date>\d{4}-\d{2}-\d{2}) - (?<end_date>\d{4}-\d{2}-\d{2}) - (?<message>.*)$
+
+
+
+
+QYUICK REFERANCE  GUIDE FOR FUTURE
+
+
+cron_log_parser:
+
+Name: The name of this parser is cron_log_parser.
+Format: Uses regex to parse the cron job execution log format.
+Regex: This regex matches the cron log structure, capturing the timestamp, hostname, process ID, user, and command.
+Time_Key: Specifies the key that contains the timestamp (timestamp).
+Time_Format: Matches the format of the timestamp in the log (e.g., Aug 19 04:09:01).
+Time_Keep: Keeps the original time in the log record.
+
+
+error_log_parse:
+
+Name: The name of this parser is error_log_parse.
+Format: Uses regex to parse application logs with a structured message format.
+Regex: This regex captures the log level, start date, end date, and message from lines like Started - 2024-08-18 - 2024-08-19 - Mosquito Joe.
+error_log_parser:

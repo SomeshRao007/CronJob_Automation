@@ -1,0 +1,94 @@
+{
+    "jobs": [
+        {
+            "name": "publish-scheduled-articles",
+            "schedule": "*/30 * * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii publishscheduledarticles/index"
+        },
+        {
+            "name": "update-gtm",
+            "schedule": "0 10 * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii google-analytics4/update-gtm"
+        },
+        {
+            "name": "scheduled-articles",
+            "schedule": "*/30 * * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii scheduled-articles/index"
+        },
+        {
+            "name": "facebook",
+            "schedule": "30 11 * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii facebook"
+        },
+        {
+            "name": "linkedin",
+            "schedule": "15 6 * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii linkedin"
+        },
+        {
+            "name": "linkedin-update-token",
+            "schedule": "0 2 * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii linkedin/update-token"
+        },
+        {
+            "name": "google-ads",
+            "schedule": "30 10 * * *",
+            "command": "cd /srv/1851-yii && /usr/bin/php -q /srv/1851-yii/console/yii google-ads"
+        },
+        {
+            "name": "google-analytics4",
+            "schedule": "0 12 * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii google-analytics4/index"
+        },
+        {
+            "name": "google-analytics4-mainsite",
+            "schedule": "20 12 * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii google-analytics4/mainsite"
+        },
+        {
+            "name": "google-analytics4-location",
+            "schedule": "0 1 * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii google-analytics4/location >> /srv/1851-yii/console/runtime/logs/ga4_location.log 2>&1"
+        },
+        {
+            "name": "powerranking",
+            "schedule": "45 12 * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii powerranking"
+        },
+        {
+            "name": "trending-calculate-points",
+            "schedule": "25 12 * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii trending/calculate-points"
+        },
+        {
+            "name": "youtube",
+            "schedule": "15 4 * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii youtube"
+        },
+        {
+            "name": "youtube-sync",
+            "schedule": "10 4 * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii youtube/sync"
+        },
+        {
+            "name": "youtube-how-to-watch",
+            "schedule": "20 4 * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii youtube/how-to-watch"
+        },
+        {
+            "name": "clearcache-clear",
+            "schedule": "10 6 * * *",
+            "command": "/usr/bin/php /srv/1851-yii/console/yii clearcache/clear"
+        },
+        {
+            "name": "story-remove",
+            "schedule": "0 4 * * 0",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii story/remove"
+        },
+        {
+            "name": "cover",
+            "schedule": "30 4 * * *",
+            "command": "/usr/bin/php -q /srv/1851-yii/console/yii cover >/dev/null 2>&1"
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+To install ---> https://docs.fluentbit.io/manual/installation/linux/ubuntu
+
+sudo apt-get update
+curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
+
+sudo systemctl start fluent-bit
+
+sudo systemctl status fluent-bit
+
+
+
+
+sudo systemctl restart fluent-bit
+
+
+
+
+config files ---> https://github.com/aws/amazon-cloudwatch-logs-for-fluent-bit
+
+PAth where to wrtite these script 
+
+/etc/fluent-bit/fluent-bit.conf
+
+
+ubuntu@ip-172-31-73-29:~$ cd /etc/fluent-bit/
+ubuntu@ip-172-31-73-29:/etc/fluent-bit$ ls
+fluent-bit.conf  parsers.conf  plugins.conf
+
+
+
+
+
+
+
+
+
